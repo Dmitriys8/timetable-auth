@@ -10,7 +10,6 @@ import ru.sber.edu.timetableauth.rest.exceptions.HttpUnauthorizedException;
 import ru.sber.edu.timetableauth.rest.models.AuthInput;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,15 +26,25 @@ public class AuthService {
         if (roles == null){
             throw new HttpUnauthorizedException();
         }
+        String rolesString = "";
+        int counter = 1;
+        for (String role : roles){
+            rolesString = rolesString
+                    .concat(role);
+            if (counter < roles.size()){
+                rolesString = rolesString
+                        .concat(", ");
+            }
+            counter++;
+        }
         Map<String, Object> tokenData = new HashMap<>();
-        tokenData.put("X-Hasura-allowed-roles", roles);
+        tokenData.put("X-Hasura-allowed-roles", rolesString);
         tokenData.put("X-Hasura-user-id", authInput.getProductUserID());
         JwtBuilder jwtBuilder = Jwts.builder();
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, 100);
         jwtBuilder.setExpiration(calendar.getTime());
         jwtBuilder.setClaims(tokenData);
-        String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, Constants.JWT_KEY).compact();
-        return token;
+        return jwtBuilder.signWith(SignatureAlgorithm.HS512, Constants.JWT_KEY).compact();
     }
 }
