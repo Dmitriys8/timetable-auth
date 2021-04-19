@@ -3,11 +3,9 @@ package ru.sber.edu.timetableauth.rest.controllers;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sber.edu.timetableauth.AuthService;
 import ru.sber.edu.timetableauth.Constants;
@@ -17,7 +15,6 @@ import ru.sber.edu.timetableauth.rest.models.HasuraRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.Map;
 
 @RestController

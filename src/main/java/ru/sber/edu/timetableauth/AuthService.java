@@ -44,9 +44,9 @@ public class AuthService {
         tokenData.put("X-Hasura-Allowed-Roles", rolesString);
         JwtBuilder jwtBuilder = Jwts.builder();
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 100);
+        calendar.add(Calendar.HOUR, 3);
         jwtBuilder.setExpiration(calendar.getTime());
-        jwtBuilder.setClaims(tokenData);
+        jwtBuilder.addClaims(tokenData);
         return jwtBuilder.signWith(SignatureAlgorithm.HS512, Constants.JWT_KEY).compact();
     }
 }
