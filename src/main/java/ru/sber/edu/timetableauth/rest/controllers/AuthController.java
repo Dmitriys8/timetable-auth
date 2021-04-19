@@ -15,6 +15,7 @@ import ru.sber.edu.timetableauth.rest.models.HasuraRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -38,14 +39,18 @@ public class AuthController {
     }
 
     @PostMapping("/check")
-    public Map<String, Object> check(
+    public Map<String, String> check(
             @RequestBody(required = false) HasuraRequest requestBody,
             HttpServletResponse response
     ) {
         try {
             String token = requestBody.getHeaders().get("timetableToken");
             Claims claims = Jwts.parser().setSigningKey(Constants.JWT_KEY).parseClaimsJws(token).getBody();
-            return claims;
+            Map<String, String> responseBody = new HashMap<>();
+            for (Map.Entry<String, Object> entry : claims.entrySet()){
+                responseBody.put(entry.getKey(), entry.getValue().toString());
+            }
+            return responseBody;
         } catch (Exception e){
             throw new HttpUnauthorizedException();
         }
