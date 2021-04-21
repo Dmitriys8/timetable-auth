@@ -20,4 +20,7 @@ public class AuthInput {
     @JsonProperty("productUserID")
     private String productUserID;
 
+    @JsonProperty("productUserRole")
+    private String productUserRole;
+
 }

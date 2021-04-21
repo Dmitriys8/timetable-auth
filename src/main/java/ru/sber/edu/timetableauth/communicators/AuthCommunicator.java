@@ -31,7 +31,7 @@ public class AuthCommunicator {
     public List<String> auth(AuthInput authInput){
         HttpEntity entity = new HttpEntity(configureHeaders());
         Roles response = restTemplate.exchange(
-                REQUEST_URI + "?productSecret=" + authInput.getProductSecret() + "&userId=" + authInput.getProductUserID(),
+                REQUEST_URI + "?productSecret=" + authInput.getProductSecret() + "&productRole=" + authInput.getProductUserRole(),
                 HttpMethod.GET,
                 entity,
                 Roles.class
@@ -39,7 +39,7 @@ public class AuthCommunicator {
         if (response.getRolesList() != null && !response.getRolesList().isEmpty()){
             return response.getRolesList()
                     .stream()
-                    .map(role -> role.get("role_id"))
+                    .map(role -> role.get("timetable_role_name"))
                     .collect(Collectors.toList());
         } else {
             return null;

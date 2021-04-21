@@ -38,10 +38,8 @@ public class AuthService {
             counter++;
         }
         Map<String, Object> tokenData = new HashMap<>();
-        tokenData.put("X-Hasura-User-Id", authInput.getProductUserID());
-        tokenData.put("X-Hasura-Role", "user");
+        tokenData.put("X-Hasura-Role", roles.get(0));
         tokenData.put("X-Hasura-Is-Owner", "false");
-        tokenData.put("X-Hasura-Allowed-Roles", rolesString);
         JwtBuilder jwtBuilder = Jwts.builder();
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, 3);

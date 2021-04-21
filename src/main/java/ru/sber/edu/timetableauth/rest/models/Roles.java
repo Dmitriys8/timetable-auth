@@ -15,6 +15,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class Roles {
 
-    @JsonProperty("user_roles")
+    @JsonProperty("user_roles_product_secrets")
     private List<Map<String, String>> rolesList;
 }
