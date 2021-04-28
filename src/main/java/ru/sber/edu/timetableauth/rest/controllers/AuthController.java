@@ -12,6 +12,7 @@ import ru.sber.edu.timetableauth.AuthService;
 import ru.sber.edu.timetableauth.Constants;
 import ru.sber.edu.timetableauth.rest.exceptions.HttpUnauthorizedException;
 import ru.sber.edu.timetableauth.rest.models.AuthInput;
+import ru.sber.edu.timetableauth.rest.models.AuthResponse;
 import ru.sber.edu.timetableauth.rest.models.HasuraRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,13 +32,14 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping
-    public String auth(
-            @RequestBody(required = false) AuthInput requestBody,
-            HttpServletResponse response
+    public AuthResponse auth(
+            @RequestBody(required = false) AuthInput requestBody
     ) {
         String token = authService.auth(requestBody);
-        response.addHeader("timetableToken", token);
-        return "success";
+        return new AuthResponse(
+                "success",
+                token
+        );
     }
 
     @PostMapping("/check")
